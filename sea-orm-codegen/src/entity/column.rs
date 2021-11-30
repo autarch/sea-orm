@@ -139,7 +139,7 @@ impl From<&ColumnDef> for Column {
         let name = col_def.get_column_name();
         let col_type = match col_def.get_column_type() {
             Some(ty) => ty.clone(),
-            None => panic!("ColumnType should not be empty"),
+            None => panic!("ColumnType for {} should not be empty", name),
         };
         let auto_increment = col_def
             .get_column_spec()

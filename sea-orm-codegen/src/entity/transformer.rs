@@ -1,7 +1,7 @@
 use crate::{
     Column, ConjunctRelation, Entity, EntityWriter, Error, PrimaryKey, Relation, RelationType,
 };
-use sea_query::TableStatement;
+use sea_query::{TableRef, TableStatement};
 use std::collections::HashMap;
 
 #[derive(Clone, Debug)]
@@ -22,7 +22,12 @@ impl EntityTransformer {
                 }
             };
             let table_name = match table_create.get_table_name() {
-                Some(s) => s,
+                Some(TableRef::Table(s)) => s.to_string(),
+                Some(_) => {
+                    return Err(Error::TransformError(
+                        "Table should be a plain table".into(),
+                    ))
+                }
                 None => {
                     return Err(Error::TransformError(
                         "Table name should not be empty".into(),

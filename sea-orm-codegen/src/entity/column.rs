@@ -44,6 +44,7 @@ impl Column {
             ColumnType::Uuid => "Uuid",
             ColumnType::Binary(_) => "Vec<u8>",
             ColumnType::Boolean => "bool",
+            ColumnType::Interval(_, _) => "String",
             _ => unimplemented!(),
         }
         .parse()
